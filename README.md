@@ -1,2 +1,3 @@
-# ExampleNN
-neural networks by example
+# Neural networks by example
+
+MNISt with keras: MLP and CNN examples
