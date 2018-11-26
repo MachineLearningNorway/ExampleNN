@@ -171,8 +171,8 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         self.fileQuit()
 
     def about(self):
-        QtWidgets.QMessageBox.about(self, "MNIST demo NDC London",
-                                    """MNIST demo NDC London"""
+        QtWidgets.QMessageBox.about(self, "MNIST demo",
+                                    """MNIST demo"""
                                 )
 
 qApp = QtWidgets.QApplication(sys.argv)
