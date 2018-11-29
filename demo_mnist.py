@@ -8,7 +8,7 @@ import numpy as np
 from keras.datasets import mnist
 from keras.models import model_from_json
 
-is_CNN_mode = True
+is_CNN_mode = False
 
 if is_CNN_mode:
     progname = "MNIST demo CNN"
@@ -20,6 +20,8 @@ else:
 
 if is_CNN_mode:
     X_test_reshaped = X_test.reshape(X_test.shape[0], 28, 28, 1)
+    X_test_reshaped = X_test_reshaped.astype('float32')
+    X_test_reshaped /= 255
 else:
     X_test_reshaped = X_test.reshape(10000, 784)
 
@@ -44,7 +46,7 @@ index = np.random.randint(1, high=10000)
 def predict_digit():
     global index
     y_ = loaded_model.predict(X_test_reshaped[index:index + 1], verbose=1)
-    s = np.sum(y_[0] * [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]).astype(int)
+    s = np.argmax(y_[0]) # np.sum(y_[0] * [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]).astype(int)
     return s
 
 class MyMplCanvas(FigureCanvas):
