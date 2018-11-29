@@ -8,18 +8,35 @@ import numpy as np
 from keras.datasets import mnist
 from keras.models import model_from_json
 
-progname = "MNIST demo"
+is_CNN_mode = True
+
+if is_CNN_mode:
+    progname = "MNIST demo CNN"
+else:
+    progname = "MNIST demo Perceptron"
 
 (X_train, y_train), (X_test, y_test) = mnist.load_data()
-X_test_reshaped = X_test.reshape(10000, 784)
+
+
+if is_CNN_mode:
+    X_test_reshaped = X_test.reshape(X_test.shape[0], 28, 28, 1)
+else:
+    X_test_reshaped = X_test.reshape(10000, 784)
 
 # load json and create model
-json_file = open('mnist.perceptron.json', 'r')
+if is_CNN_mode:
+    json_file = open('mnist.cnn.json', 'r')
+else:
+    json_file = open('mnist.perceptron.json', 'r')
+
 loaded_model_json = json_file.read()
 json_file.close()
 loaded_model = model_from_json(loaded_model_json)
 # load weights into new model
-loaded_model.load_weights("mnist.perceptron.h5")
+if is_CNN_mode:
+    loaded_model.load_weights("mnist.cnn.h5")
+else:
+    loaded_model.load_weights("mnist.perceptron.h5")
 print("Loaded model from disk")
 
 index = np.random.randint(1, high=10000)
